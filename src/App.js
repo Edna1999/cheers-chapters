@@ -1,12 +1,12 @@
-import './App.css';
-import CocktailList from './components/CocktailList';
+import CocktailForm from './components/CocktailForm';
+
 
 
 function App() {
     return (
         <div className='cocktail-app'>
 
-        <CocktailList />
+        <CocktailForm />
 
         </div>
     );
