@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 
 
-function CocktailForm(props) {
+function Cocktails() {
     
     const [input, setInput] = useState('');
     const [results, setResults] = useState([]);
@@ -67,15 +67,16 @@ function CocktailForm(props) {
         <div>
 
             <input 
+            id='search'
             type='text'
             value={input}
             onChange={handleChange}
             placeholder='Search'
             />
 
-            <button onClick={handleSearch}>Search</button>
+            <button id='searchBtn' onClick={handleSearch}>Search</button>
 
-          <ul>
+          <ul id='container'>
             {results.map((drink, index) => (
                 <li key={index}>
                     <div onClick={() => handleDropdown(drink.id)}>
@@ -112,6 +113,6 @@ function CocktailForm(props) {
 
 };
 
-export default CocktailForm;
+export default Cocktails;
   
    

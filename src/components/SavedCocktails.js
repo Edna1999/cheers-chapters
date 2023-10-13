@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import CocktailForm from './CocktailForm';
 
 
-function CocktailList(){
+const SavedCocktails = () => {
+    const [savedCocktail, setSavedCocktail] = useState([]);
 
- const [cocktail, setCocktail] = useState('');
 
 
     const addCocktail = (drink) => {
@@ -15,17 +14,17 @@ function CocktailList(){
             return;
         }
 
-        const newDrink = [drink, ...cocktail];
+        const newDrink = [drink, ...savedCocktail];
         console.log(newDrink);
 
-        setCocktail(newDrink);
+        setSavedCocktail(newDrink);
     };
 
     const removeCocktail = (id) => {
 
-        const deletedCocktail = [...cocktail].filter((item) => item.id !== id);
+        const deletedCocktail = [...savedCocktail].filter((item) => item.id !== id);
 
-        setCocktail(deletedCocktail);
+        setSavedCocktail(deletedCocktail);
     };
 
 
@@ -33,17 +32,18 @@ function CocktailList(){
         <div>
 
             <h1>Saved Drinks</h1>
-            <CocktailForm
-              cocktail={cocktail}
+            <div>
+              cocktail={savedCocktail}
               addCocktail={addCocktail}
               removeCocktail={removeCocktail}
-            />
+              </div>
+            
         </div>
     );
 
 }
 
-export default CocktailList;
+export default SavedCocktails;
 
 
 
