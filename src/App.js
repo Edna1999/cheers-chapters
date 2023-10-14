@@ -9,17 +9,20 @@ import SavedCocktails from './components/SavedCocktails';
 function App() {
     return (
         <div className='cocktail-app'>
-<Router>
 
+<Router>
     <Routes>
+
         <Route
-        path='/'
+        path='/cheers-chapters'
         element={<Cocktails/>}
         />
+
         <Route
         path='/savedCocktails'
         element={<SavedCocktails/>}
         />
+
     </Routes>
 </Router>
        
