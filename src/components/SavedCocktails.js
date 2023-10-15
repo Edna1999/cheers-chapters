@@ -5,36 +5,25 @@ import { Link } from 'react-router-dom';
 
 
 const SavedCocktails = () => {
-    // const [savedCocktail, setSavedCocktail] = useState([]);
+
+    const [selectedDrink, setSelectedDrink] = useState(null);
 
 
+    const savedRecipes = JSON.parse(localStorage.getItem('savedCocktails')) || [];
 
-    // const addCocktail = (drink) => {
+    const handleDropdown = (drinkId) => {
 
-    //     console.log(drink);
+        setSelectedDrink(selectedDrink === drinkId ? null : drinkId);
 
-    //     if(!drink.text){
-    //         return;
-    //     }
+    }
 
-    //     const newDrink = [drink, ...savedCocktail];
-    //     console.log(newDrink);
-
-    //     setSavedCocktail(newDrink);
-    // };
-
-    // const removeCocktail = (id) => {
-
-    //     const deletedCocktail = [...savedCocktail].filter((item) => item.id !== id);
-
-    //     setSavedCocktail(deletedCocktail);
-    // };
-
+   
+ 
 
     return (
         
-
-        <div className="nav">
+       <div>
+        <nav className="nav">
         
         <button className="nav-item">
         <Link to='/cheers-chapters'>
@@ -45,7 +34,58 @@ const SavedCocktails = () => {
         </Link>
         </button>
 
-        </div>    
+        </nav>    
+
+        <div>
+
+        <h1>Saved Cocktails</h1>
+        
+        <ul >
+            {savedRecipes.map((drink, index) => (
+                <li key={index}>
+                    <div onClick={() => {handleDropdown(drink.id); console.log(savedRecipes)}}>
+                    <h2>{drink.name}</h2>
+
+                    </div>
+
+                    {selectedDrink === drink.id && (
+
+                    <div>
+
+                    <img src={drink.image} alt='cocktailImage'/>
+                    <div>
+                    <h2>Ingredients</h2>
+                    <ul>
+                        {drink.ingredients.map((ingredient, i) => (
+                            <li key={i}>{ingredient}    ({drink.measurements[i]})</li>
+                        ))}
+                    </ul>
+                
+                    </div>
+                    <p>{drink.instructions}</p>
+
+                
+
+                    </div>
+
+                    
+                 )}   
+
+                </li>
+
+                
+            ))}
+
+            
+            
+          </ul>
+
+
+         
+
+        </div>
+
+        </div>
             
         
     );

@@ -11,13 +11,16 @@ function App() {
         <div className='cocktail-app'>
 
 <Router>
+
     <Routes>
 
-        <Route
-        path='/cheers-chapters'
+
+    <Route
+        exact path='/cheers-chapters'
         element={<Cocktails/>}
         />
-
+        
+    
         <Route
         path='/savedCocktails'
         element={<SavedCocktails/>}
