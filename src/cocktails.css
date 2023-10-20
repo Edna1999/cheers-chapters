@@ -1,0 +1,119 @@
+body {
+    display: flex;
+    background-image: url(./images/cherries-splashing-martini-glass-20228684.webp);
+    background-repeat: no-repeat;
+    background-position-y: top;
+}
+
+.nav{
+    background-color: #5d0c28;
+    padding: 30px;
+    display: flex;
+    width: 1400px;
+    
+}
+
+.cheers{
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+.saveBtn{
+    margin-left: 1020px;
+    border: 0;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #5d0c28;
+    
+
+}
+
+.saveBtn:hover {
+    box-shadow: 2px 2px 2px 2px #510027 ;
+}
+
+#search{
+margin-left: 700px;
+margin-top: 10px;
+height: 45px;
+width: 300px;
+border-top-left-radius: 15px;
+border-bottom-left-radius: 15px;
+border: 1px solid rgba(118, 117, 117, 0.805);
+box-shadow: 1px 1px 1px 1px rgba(17, 17, 17, 0.461);
+background-color: rgba(224, 223, 223, 0.881);
+
+
+}
+
+#searchBtn{
+    margin-top: 10px;
+    height: 48px;
+    width: 80px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #5d0c28;
+    color: rgb(210, 217, 210);
+    border: 0;
+    box-shadow: 1px 1px 1px 1px rgba(17, 17, 17, 0.461);
+}
+
+#searchBtn:hover{
+    border: 1px solid rgba(0, 0, 0, 0.349);
+    box-shadow: none;
+    
+}
+
+.homeBtn{
+    background-color: #5d0c28;
+    border: 0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.homeBtn:hover{
+    box-shadow: 2px 2px 2px 2px #510027 ;
+
+}
+
+.listContainer{
+    list-style-type: none;
+    color: #5d0c28;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 800px;
+    margin-top: 30px;
+    border: 1px solid black;
+    width: 500px;
+    height: 600px;
+    overflow: scroll;
+    border-radius: 10px;
+}
+
+#saved{
+    margin-left: 900px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgb(38, 68, 38);
+    text-decoration: underline;
+
+}
+.drinkName{
+    text-align: center;
+}
+
+
+.drinkImg{
+    height: 400px;
+    width: 400px;
+    border-radius: 10px;
+    margin-left: 35px;
+}
+
+.save{
+    background-color: white;
+    border: none;
+    margin-top: 5px;
+
+}

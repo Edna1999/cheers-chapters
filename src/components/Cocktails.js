@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
-
+import '../cocktails.css';
 
 
 function Cocktails() {
     
     const [input, setInput] = useState('');
     const [results, setResults] = useState([]);
-    const [selectedDrink, setSelectedDrink] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
+    
+    const itemsPerPage = 1;
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
 
 
@@ -18,7 +21,6 @@ function Cocktails() {
 
     useEffect(() => {
 
-        console.log(results)
     }, [results])
 
     const handleSearch = async () => {
@@ -61,15 +63,20 @@ function Cocktails() {
         setInput(e.target.value);
     }
 
-    const handleDropdown = (drinkId) => {
+    
 
-        setSelectedDrink(selectedDrink === drinkId ? null : drinkId);
+     const saveCocktail = (drink) => {
 
-    }
+        
+        const { id, name, image, ingredients, measurements, instructions } = drink;
 
-     const saveCocktail = (cocktail) => {
+        const isDrinkSaved = savedCocktails.some(savedDrink => savedDrink.id === id)
 
-        const { id, name, image, ingredients, measurements, instructions } = cocktail;
+        if(isDrinkSaved){
+
+            console.log('This drink is already saved!')
+
+        } else {
 
         const savedCocktailInfo = { id, name, image, ingredients, measurements, instructions};
 
@@ -78,13 +85,42 @@ function Cocktails() {
 
         localStorage.setItem('savedCocktails', JSON.stringify(updatedSavedCocktails));
 
-      console.log(savedCocktailInfo)
 
+     }
+
+   
 
       };
 
+      const handleNextPage = () => {
+        if(currentPage < Math.ceil(results.length / itemsPerPage) - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+      }
 
+      const handlePreviousPage = () => {
+        if(currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+      }
+
+     
+        const handleDownload = () => {
     
+            const drinkInfo = savedCocktails.map((drink, index) => {
+                return `${index + 1}, ${drink.name}\nIngredients: ${drink.ingredients.join(', ')}\nInstructions: ${drink.instructions}\n\n`
+            }).join('\n');
+    
+    
+            const blob = new Blob([drinkInfo], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'saved_recipes.txt';
+            a.click();
+    
+        }
+
 
 
     return (
@@ -92,15 +128,7 @@ function Cocktails() {
         <div>
 
             <nav className="nav">
-            <button  className="nav-item">
-            <Link to='/savedCocktails'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-floppy-fill" viewBox="0 0 16 16">
-            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5v-13Z"/>
-            <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V16Zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V0ZM9 1h2v4H9V1Z"/>
-        </svg></Link>
-        </button>
-        
-        </nav>
-
+            <h1 className='cheers'> Cheers&#129346;Chapters </h1>
             <input 
             id='search'
             type='text'
@@ -110,20 +138,26 @@ function Cocktails() {
             />
 
             <button id='searchBtn' onClick={handleSearch}>Search</button>
+           
+        
+        </nav>
 
-          <ul >
-            {results.map((drink, index) => (
-                <li key={index}>
-                    <div onClick={() => handleDropdown(drink.id)}>
-                    <h2>{drink.name}</h2>
+         
 
-                    </div>
+          <ul className='listContainer'>
+            {results.slice(startIndex, endIndex).map((drink, index) => (
+                <li key={index} className='singleDrink'>
+                
 
-                    {selectedDrink === drink.id && (
+                
+                    <h2 className='drinkName'>{drink.name}</h2>
 
-                    <div>
+                     <button className='save'   onClick={() => { handleDownload(); console.log('downloaded!')}}><svg style={{color: 'pink'}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                    </svg></button>
 
-                    <img src={drink.image} alt='cocktailImage'/>
+
+                    <img className='drinkImg' src={drink.image} alt='cocktailImage'/>
                     <div>
                     <h2>Ingredients</h2>
                     <ul>
@@ -133,17 +167,16 @@ function Cocktails() {
                     </ul>
                 
                     </div>
+                    <h2>Instructions</h2>
+
+
                     <p>{drink.instructions}</p>
 
-                    <button onClick={() => {saveCocktail(drink); console.log(saveCocktail)}}><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-cloud-download-fill" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                    </svg></button>
-
-                    </div>
-
                     
-                 )}   
+                    <button onClick={handlePreviousPage}>&#8592;</button>
+                    <button onClick={handleNextPage}>&#8594;</button>
 
+                   
                 </li>
 
                 
@@ -158,6 +191,7 @@ function Cocktails() {
     );   
 
 };
+
 
 export default Cocktails;
   
